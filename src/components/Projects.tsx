@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ExternalLink, MapPin, Calendar, DollarSign, ArrowLeft } from 'lucide-react';
+import { ExternalLink, MapPin, Calendar, DollarSign, } from 'lucide-react';
 
 interface ProjectsProps {
   darkMode: boolean;
