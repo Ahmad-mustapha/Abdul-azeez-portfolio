@@ -1,144 +1,78 @@
-import React, { useEffect, useState } from 'react';
-import { ChevronDown, MapPin, Mail, Phone, Linkedin } from 'lucide-react';
 
-const Hero = ({ darkMode }) => {
-  const [isVisible, setIsVisible] = useState(false);
 
-  useEffect(() => {
-    setIsVisible(true);
-  }, []);
+import {
+  FiDownload,
+} from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
-  const stats = [
-    { value: '30%', label: 'Cost Savings Achieved' },
-    { value: '₦25M+', label: 'Saved Through Optimization' },
-    { value: '20+', label: 'Major Projects Delivered' },
-    { value: '5+', label: 'Years Experience' },
-  ];
+interface HeroProps {
+  darkMode: boolean;
+}
 
-  const scrollToNext = () => {
-    const aboutSection = document.querySelector('#about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
+const Hero = ({ darkMode }: HeroProps) => {
+  const navigate = useNavigate()
   return (
-    <section id="home" className={`min-h-screen relative overflow-hidden transition-colors duration-300 ${
-      darkMode 
-        ? 'bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white' 
-        : 'bg-gradient-to-br from-slate-100 via-white to-slate-50 text-slate-900'
+    <section className={`relative min-h-screen font-sans flex items-center justify-center overflow-hidden py-24 px-6 transition-colors duration-300 ${
+      darkMode ? 'bg-slate-900 text-white' : 'bg-white text-slate-900'
     }`}>
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23${darkMode ? 'ffffff' : '000000'}' fill-opacity='0.1'%3E%3Cpath d='m36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`
-        }} />
-      </div>
+      <div className="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center z-10">
+        {/* Left: Text Content */}
+        <div className="flex flex-col text-center lg:text-left items-center lg:items-start">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+            AbdulAzeez Ahmad
+          </h1>
 
-      <div className="container mx-auto px-6 pt-32 pb-16 relative">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[calc(100vh-8rem)]">
-          {/* Left Content */}
-          <div className={`transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
+          <p className={`text-2xl md:text-3xl mt-3 ${
+            darkMode ? 'text-gray-300' : 'text-slate-600'
           }`}>
-            {/* Profile Image */}
-            <div className="mb-8 flex justify-center lg:justify-start">
-              <div className="relative">
-                <img
-                  src="/WhatsApp Image 2025-08-11 at 18.06.07_dc05d73d.jpg"
-                  alt="AbdulAzeez Ahmad"
-                  className="w-32 h-32 lg:w-40 lg:h-40 rounded-full object-cover border-4 border-orange-500 shadow-2xl"
-                />
-                <div className="absolute -bottom-2 -right-2 bg-green-500 w-8 h-8 rounded-full border-4 border-white flex items-center justify-center">
-                  <div className="w-3 h-3 bg-white rounded-full"></div>
-                </div>
-              </div>
-            </div>
+            Cost and Contract Professional
+          </p>
 
-            <div className="mb-6">
-              <span className={`inline-block px-4 py-2 rounded-full text-sm font-medium mb-4 ${
-                darkMode 
-                  ? 'bg-orange-500/20 text-orange-300' 
-                  : 'bg-orange-100 text-orange-700'
-              }`}>
-                Professional Quantity Surveyor
-              </span>
-              <h1 className="text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-                AbdulAzeez
-                <span className="block text-orange-400">Ahmad</span>
-              </h1>
-              <p className={`text-xl mb-8 leading-relaxed ${
-                darkMode ? 'text-slate-300' : 'text-slate-600'
-              }`}>
-                Results-driven Quantity Surveyor with proven expertise in cost estimation, 
-                budgeting, and project management across high-value infrastructure projects 
-                worth over ₦1 billion.
-              </p>
-            </div>
+          <p className={`text-base mt-6 max-w-xl ${
+            darkMode ? 'text-gray-400' : 'text-slate-600'
+          }`}>
+            With over 5 years' experience delivering ₦500M+ residential,
+            commercial, and infrastructure projects, I specialize in cost
+            planning, estimation, management, contract administration, and
+            scheduling. I have achieved 15–30% savings through value engineering
+            and smart procurement. Committed to sustainability and digital
+            innovation, I integrate cost management with project leadership,
+            SDGs, and data-driven solutions to deliver smarter, future-ready
+            outcomes.
+          </p>
 
-            {/* Contact Info */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-              <div className="flex items-center space-x-3">
-                <MapPin className="text-orange-400" size={20} />
-                <span className={darkMode ? 'text-slate-300' : 'text-slate-600'}>Lagos, Nigeria</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Phone className="text-orange-400" size={20} />
-                <span className={darkMode ? 'text-slate-300' : 'text-slate-600'}>+234 901 196 7239</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="text-orange-400" size={20} />
-                <span className={darkMode ? 'text-slate-300' : 'text-slate-600'}>ahmadabdulazeez122@gmail.com</span>
-              </div>
-              <div className="flex items-center space-x-3">
-                <Linkedin className="text-orange-400" size={20} />
-                <span className={darkMode ? 'text-slate-300' : 'text-slate-600'}>LinkedIn Profile</span>
-              </div>
-            </div>
-
-            <button 
-              onClick={scrollToNext}
-              className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105"
-            >
+          <div className="mt-10 flex flex-wrap items-center justify-center lg:justify-start gap-4">
+            <button onClick={()=> navigate('/projects')} className="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition duration-300">
               View My Work
             </button>
-          </div>
-
-          {/* Right Content - Stats */}
-          <div className={`transform transition-all duration-1000 delay-300 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
-          }`}>
-            <div className={`backdrop-blur-sm rounded-2xl p-8 border ${
+            <button className={`border font-semibold py-3 px-8 rounded-lg flex items-center gap-2 transition duration-300 ${
               darkMode 
-                ? 'bg-white/10 border-white/20' 
-                : 'bg-white/80 border-slate-200'
+                ? 'border-gray-700 text-white hover:bg-white/10' 
+                : 'border-gray-300 text-slate-900 hover:bg-slate-100'
             }`}>
-              <h3 className="text-2xl font-bold mb-8 text-center">Key Achievements</h3>
-              <div className="grid grid-cols-2 gap-6">
-                {stats.map((stat, index) => (
-                  <div key={index} className="text-center">
-                    <div className="text-3xl lg:text-4xl font-bold text-orange-400 mb-2">
-                      {stat.value}
-                    </div>
-                    <div className={`text-sm ${
-                      darkMode ? 'text-slate-300' : 'text-slate-600'
-                    }`}>{stat.label}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+              <FiDownload />
+              <span>Download CV</span>
+            </button>
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <button onClick={scrollToNext} className={`transition-colors ${
-            darkMode 
-              ? 'text-white/70 hover:text-white' 
-              : 'text-slate-500 hover:text-slate-700'
-          }`}>
-            <ChevronDown size={32} />
-          </button>
+        {/* Right: Decorative Visuals (Now responsive) */}
+        <div className="relative flex items-center justify-center w-full h-[350px] sm:h-[450px] lg:h-[500px] mt-16 lg:mt-0">
+          {/* Main Circle Frame */}
+          <div className={`absolute w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[480px] lg:h-[480px] border rounded-full ${
+            darkMode ? 'border-gray-700' : 'border-gray-300'
+          }`} />
+
+          {/* Image Container with Overlay */}
+          <div className="relative w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] lg:w-[380px] lg:h-[380px] rounded-full overflow-hidden">
+            <img
+              src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+              alt="AbdulAzeez Ahmad"
+              className="w-full h-full object-cover" // object-cover ensures the image fills the space without distortion
+            />
+            {/* This overlay darkens the image to match the original design */}
+            {/* <div className="absolute inset-0 bg-black/60 rounded-full"></div> */}
+          </div>
         </div>
       </div>
     </section>

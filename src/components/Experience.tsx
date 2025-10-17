@@ -1,7 +1,10 @@
-import React from 'react';
 import { Calendar, MapPin, Building, TrendingUp } from 'lucide-react';
 
-const Experience = ({ darkMode }) => {
+interface ExperienceProps {
+  darkMode: boolean;
+}
+
+const Experience = ({ darkMode }: ExperienceProps) => {
   const experiences = [
     {
       title: 'Project Quantity Surveyor',
@@ -84,7 +87,7 @@ const Experience = ({ darkMode }) => {
               }`}>
                 {/* Timeline Dot */}
                 <div className={`absolute left-4 md:left-1/2 transform md:-translate-x-1/2 -translate-y-1 w-8 h-8 rounded-full border-4 border-white ${
-                  exp.type === 'current' ? 'bg-orange-500' : 'bg-slate-400'
+                  exp.type === 'current' ? 'bg-blue-600' : 'bg-slate-400'
                 } z-10`}>
                   <div className={`absolute inset-2 rounded-full ${
                     darkMode ? 'bg-slate-800' : 'bg-white'
@@ -134,7 +137,7 @@ const Experience = ({ darkMode }) => {
                     <ul className="space-y-2">
                       {exp.achievements.map((achievement, i) => (
                         <li key={i} className="flex items-start space-x-3">
-                          <TrendingUp className="text-orange-500 mt-0.5 flex-shrink-0" size={16} />
+                          <TrendingUp className="text-blue-600 mt-0.5 flex-shrink-0" size={16} />
                           <span className={`text-sm leading-relaxed ${
                             darkMode ? 'text-slate-300' : 'text-slate-700'
                           }`}>{achievement}</span>

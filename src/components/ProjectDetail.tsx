@@ -1,14 +1,13 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ExternalLink, MapPin, Calendar, DollarSign, ArrowLeft } from 'lucide-react';
+import { Link, useParams } from 'react-router-dom';
+import { MapPin, Calendar, DollarSign, Users, ArrowLeft } from 'lucide-react';
 
-interface ProjectsProps {
+interface ProjectDetailProps {
   darkMode: boolean;
-  showAll?: boolean;
 }
 
-const Projects = ({ darkMode, showAll = false }: ProjectsProps) => {
-
+const ProjectDetail = ({ darkMode }: ProjectDetailProps) => {
+  const { id } = useParams<{ id: string }>();
+  
   const projects = [
     {
       id: 1,
@@ -42,7 +41,7 @@ const Projects = ({ darkMode, showAll = false }: ProjectsProps) => {
       location: 'Minna, Niger State',
       year: '2022 - Present',
       value: '₦800+ Million',
-      image: 'https://images.pexels.com/photos/159306/construction-site-build-construction-work-159306.jpeg?auto=compress&cs=tinysrgb&w=800',
+      image: 'https://images.pexels.com/photos/159306/pexels-photo-159306.jpeg?auto=compress&cs=tinysrgb&w=800',
       category: 'Commercial',
       description: 'Comprehensive reconstruction of Gold Buying Centre with specialized facilities for gold processing, storage, and trade operations.',
       features: [
@@ -161,162 +160,174 @@ const Projects = ({ darkMode, showAll = false }: ProjectsProps) => {
     }
   ];
 
-  const categories = ['All', 'Infrastructure', 'Commercial', 'Residential'];
-  const [activeCategory, setActiveCategory] = useState('All');
+  const projectId = id ? parseInt(id) : 0;
+  const project = projects.find(p => p.id === projectId);
 
-  // Show only first 3 projects for featured section when showAll is false
-  const displayProjects = showAll ? projects : projects.slice(0, 3);
-  
-  const filteredProjects = activeCategory === 'All' 
-    ? displayProjects 
-    : displayProjects.filter(project => project.category === activeCategory);
-
-
-  return (
-    <>
-      <section id="projects" className={`py-20 transition-colors duration-300 ${
-        darkMode ? 'bg-slate-900' : 'bg-white'
+  if (!project) {
+    return (
+      <div className={`min-h-screen transition-colors duration-300 ${
+        darkMode ? 'bg-slate-900' : 'bg-slate-50'
       }`}>
-        <div className="container mx-auto px-6">
-          {/* Back Button - only show when showing all projects */}
-          {/* {showAll && (
-            <div className="mb-8">
-              <Link
-                to="/"
-                className={`flex items-center w-[5rem] space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
-                  darkMode
-                    ? 'bg-slate-800 text-white hover:bg-slate-700'
-                    : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                }`}
-              >
-                <ArrowLeft size={20} />
-                <span>Back to Portfolio</span>
-              </Link>
-            </div>
-          )} */}
-
-          <div className="text-center mb-16">
-            <h2 className={`text-4xl font-bold mb-4 ${
+        <div className="container mx-auto px-6 py-20">
+          <div className="text-center">
+            <h1 className={`text-4xl font-bold mb-4 ${
               darkMode ? 'text-white' : 'text-slate-900'
-            }`}>{showAll ? 'All Projects' : 'Featured Projects'}</h2>
-            <p className={`text-xl max-w-3xl mx-auto mb-8 ${
+            }`}>Project Not Found</h1>
+            <p className={`text-xl mb-8 ${
               darkMode ? 'text-slate-300' : 'text-slate-600'
             }`}>
-              {showAll 
-                ? 'Complete portfolio of infrastructure, commercial, and residential projects with proven results and exceptional value delivery'
-                : 'Showcasing featured infrastructure and construction projects with proven results and exceptional value delivery'
-              }
+              The project you're looking for doesn't exist.
             </p>
+            <Link
+              to="/projects"
+              className={`inline-flex items-center px-6 py-3 rounded-lg font-semibold transition-all duration-300 ${
+                darkMode
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                  : 'bg-blue-600 hover:bg-blue-700 text-white'
+              }`}
+            >
+              <ArrowLeft className="mr-2" size={20} />
+              Back to Projects
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-            {/* Category Filter */}
-            <div className="flex flex-wrap justify-center gap-4">
-              {categories.map((category) => (
-                <button
-                  key={category}
-                  onClick={() => setActiveCategory(category)}
-                  className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
-                    activeCategory === category
-                      ? 'bg-blue-600 text-white shadow-lg'
-                      : darkMode 
-                        ? 'bg-slate-700 text-slate-300 hover:bg-slate-600' 
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
-                  }`}
-                >
-                  {category}
-                </button>
-              ))}
+  return (
+    <div className={`min-h-screen transition-colors duration-300 ${
+      darkMode ? 'bg-slate-900' : 'bg-slate-50'
+    }`}>
+      <section className="py-20">
+        <div className="container mx-auto px-6">
+          {/* Back Button */}
+          <div className="mb-8">
+            <Link
+              to="/projects"
+              className={`inline-flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors duration-200 ${
+                darkMode
+                  ? 'bg-slate-800 text-white hover:bg-slate-700'
+                  : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+              }`}
+            >
+              <ArrowLeft size={20} />
+              <span>Back to Projects</span>
+            </Link>
+          </div>
+
+          {/* Project Header */}
+          <div className="mb-12">
+            <div className="relative overflow-hidden rounded-2xl mb-8">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-64 md:h-96 object-cover"
+              />
+              <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
+                {project.category}
+              </div>
+            </div>
+
+            <h1 className={`text-4xl md:text-5xl font-bold mb-6 ${
+              darkMode ? 'text-white' : 'text-slate-900'
+            }`}>
+              {project.title}
+            </h1>
+
+            <div className="grid md:grid-cols-3 gap-4 mb-8">
+              <div className="flex items-center space-x-2">
+                <MapPin className="text-blue-600" size={20} />
+                <span className={darkMode ? 'text-slate-300' : 'text-slate-600'}>{project.location}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <Calendar className="text-blue-600" size={20} />
+                <span className={darkMode ? 'text-slate-300' : 'text-slate-600'}>{project.year}</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <DollarSign className="text-blue-600" size={20} />
+                <span className={darkMode ? 'text-slate-300' : 'text-slate-600'}>{project.value}</span>
+              </div>
+            </div>
+
+            <p className={`text-xl leading-relaxed mb-8 ${
+              darkMode ? 'text-slate-300' : 'text-slate-700'
+            }`}>
+              {project.description}
+            </p>
+          </div>
+
+          {/* Project Details */}
+          <div className="grid md:grid-cols-2 gap-12">
+            <div>
+              <h2 className={`text-2xl font-bold mb-6 ${
+                darkMode ? 'text-white' : 'text-slate-900'
+              }`}>Project Features</h2>
+              <ul className="space-y-4">
+                {project.features.map((feature: string, index: number) => (
+                  <li key={index} className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-blue-600 rounded-full mt-3 flex-shrink-0"></div>
+                    <span className={`text-lg ${
+                      darkMode ? 'text-slate-300' : 'text-slate-600'
+                    }`}>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h2 className={`text-2xl font-bold mb-6 ${
+                darkMode ? 'text-white' : 'text-slate-900'
+              }`}>Key Achievements</h2>
+              <ul className="space-y-4">
+                {project.achievements.map((achievement: string, index: number) => (
+                  <li key={index} className="flex items-start space-x-3">
+                    <div className="w-2 h-2 bg-green-500 rounded-full mt-3 flex-shrink-0"></div>
+                    <span className={`text-lg ${
+                      darkMode ? 'text-slate-300' : 'text-slate-600'
+                    }`}>{achievement}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
 
-          <div className={`grid gap-8 ${showAll ? 'md:grid-cols-2 lg:grid-cols-3' : 'md:grid-cols-2 lg:grid-cols-2'}`}>
-            {filteredProjects.map((project) => (
-              <Link
-                key={project.id}
-                to={`/projects/${project.id}`}
-                className={`block rounded-xl shadow-lg overflow-hidden border hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 ${
-                  darkMode 
-                    ? 'bg-slate-800 border-slate-700' 
-                    : 'bg-white border-slate-100'
-                }`}
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-48 object-cover transition-transform duration-300 hover:scale-105"
-                  />
-                  <div className="absolute top-4 left-4 bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                    {project.category}
-                  </div>
-                </div>
-
-                <div className="p-6">
-                  <h3 className={`text-xl font-bold mb-3 line-clamp-2 ${
+          {/* Project Info Card */}
+          <div className={`mt-12 p-8 rounded-2xl ${
+            darkMode ? 'bg-slate-800' : 'bg-slate-100'
+          }`}>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-center space-x-3">
+                <Users className="text-blue-600" size={24} />
+                <div>
+                  <span className={`font-medium text-lg ${
+                    darkMode ? 'text-slate-300' : 'text-slate-700'
+                  }`}>Role</span>
+                  <p className={`text-xl font-semibold ${
                     darkMode ? 'text-white' : 'text-slate-900'
-                  }`}>
-                    {project.title}
-                  </h3>
-                  
-                  <p className={`text-sm mb-4 line-clamp-2 ${
-                    darkMode ? 'text-slate-300' : 'text-slate-600'
-                  }`}>
-                    {project.description}
-                  </p>
-
-                  <div className="space-y-2 mb-4">
-                    <div className={`flex items-center text-sm ${
-                      darkMode ? 'text-slate-400' : 'text-slate-500'
-                    }`}>
-                      <MapPin size={14} className="mr-2" />
-                      {project.location}
-                    </div>
-                    <div className={`flex items-center text-sm ${
-                      darkMode ? 'text-slate-400' : 'text-slate-500'
-                    }`}>
-                      <Calendar size={14} className="mr-2" />
-                      {project.year}
-                    </div>
-                    <div className={`flex items-center text-sm ${
-                      darkMode ? 'text-slate-400' : 'text-slate-500'
-                    }`}>
-                      <DollarSign size={14} className="mr-2" />
-                      {project.value}
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-blue-600">
-                      {project.role}
-                    </span>
-                    <ExternalLink size={16} className={
-                      darkMode ? 'text-slate-500' : 'text-slate-400'
-                    } />
-                  </div>
+                  }`}>{project.role}</p>
                 </div>
-              </Link>
-            ))}
-          </div>
-
-          {/* View All Projects Button - only show when not showing all projects */}
-          {!showAll && (
-            <div className="text-center mt-12">
-              <Link
-                to="/projects"
-                className={`inline-flex items-center px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 ${
-                  darkMode
-                    ? 'bg-slate-800 text-white border border-slate-700 hover:bg-slate-700'
-                    : 'bg-white text-slate-900 border border-slate-200 hover:bg-slate-50'
-                }`}
-              >
-                <span>View All Projects</span>
-                <ExternalLink className="ml-2" size={20} />
-              </Link>
+              </div>
+              <div className="flex items-center space-x-3">
+                <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-bold">C</span>
+                </div>
+                <div>
+                  <span className={`font-medium text-lg ${
+                    darkMode ? 'text-slate-300' : 'text-slate-700'
+                  }`}>Client</span>
+                  <p className={`text-xl font-semibold ${
+                    darkMode ? 'text-white' : 'text-slate-900'
+                  }`}>{project.client}</p>
+                </div>
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </section>
-    </>
+    </div>
   );
 };
 
-export default Projects;
+export default ProjectDetail;
+

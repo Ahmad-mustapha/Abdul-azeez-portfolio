@@ -1,7 +1,10 @@
-import React from 'react';
 import { Award, TrendingUp, Users, Target } from 'lucide-react';
 
-const About = ({ darkMode }) => {
+interface AboutProps {
+  darkMode: boolean;
+}
+
+const About = ({ darkMode }: AboutProps) => {
   const highlights = [
     {
       icon: TrendingUp,
@@ -72,23 +75,23 @@ const About = ({ darkMode }) => {
             }`}>Core Expertise</h3>
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                 <span className={darkMode ? 'text-slate-300' : 'text-slate-700'}>Cost Estimation & Budget Control</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                 <span className={darkMode ? 'text-slate-300' : 'text-slate-700'}>Contract Administration & Claims Management</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                 <span className={darkMode ? 'text-slate-300' : 'text-slate-700'}>Project Planning & Scheduling</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                 <span className={darkMode ? 'text-slate-300' : 'text-slate-700'}>Material Management & Procurement</span>
               </div>
               <div className="flex items-center space-x-3">
-                <div className="w-2 h-2 bg-orange-500 rounded-full"></div>
+                <div className="w-2 h-2 bg-blue-600 rounded-full"></div>
                 <span className={darkMode ? 'text-slate-300' : 'text-slate-700'}>Quality Assurance & Construction Supervision</span>
               </div>
             </div>
@@ -100,13 +103,13 @@ const About = ({ darkMode }) => {
             <div key={index} className="text-center group">
               <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 transition-all duration-300 ${
                 darkMode 
-                  ? 'bg-slate-700 group-hover:bg-orange-900' 
-                  : 'bg-slate-100 group-hover:bg-orange-100'
+                  ? 'bg-slate-700' 
+                  : 'bg-slate-100'
               }`}>
                 <item.icon className={`transition-colors ${
                   darkMode 
-                    ? 'text-slate-300 group-hover:text-orange-400' 
-                    : 'text-slate-700 group-hover:text-orange-600'
+                    ? 'text-slate-300' 
+                    : 'text-slate-700'
                 }`} size={28} />
               </div>
               <h3 className={`text-lg font-bold mb-2 ${

@@ -1,7 +1,10 @@
-import React from 'react';
 import { GraduationCap, Award, BookOpen, Users } from 'lucide-react';
 
-const Education = ({ darkMode }) => {
+interface EducationProps {
+  darkMode: boolean;
+}
+
+const Education = ({ darkMode }: EducationProps) => {
   const education = [
     {
       degree: 'Bachelor of Science, Quantity Surveying',
@@ -118,10 +121,10 @@ const Education = ({ darkMode }) => {
         <div className="mb-16">
           <div className="flex items-center mb-8">
             <div className={`p-3 rounded-lg mr-4 ${
-              darkMode ? 'bg-orange-900/50' : 'bg-orange-100'
+              darkMode ? 'bg-blue-900/50' : 'bg-blue-100'
             }`}>
               <Users className={`${
-                darkMode ? 'text-orange-400' : 'text-orange-600'
+                darkMode ? 'text-blue-500' : 'text-blue-600'
               }`} size={28} />
             </div>
             <h3 className={`text-2xl font-bold ${
@@ -149,7 +152,7 @@ const Education = ({ darkMode }) => {
                   </span>
                 </div>
                 <p className={`font-medium mb-3 ${
-                  darkMode ? 'text-orange-400' : 'text-orange-600'
+                  darkMode ? 'text-blue-500' : 'text-blue-600'
                 }`}>{role.organization}</p>
                 <p className={`text-sm leading-relaxed ${
                   darkMode ? 'text-slate-300' : 'text-slate-600'
@@ -160,7 +163,7 @@ const Education = ({ darkMode }) => {
         </div>
 
         {/* Personal Interests */}
-        <div>
+        {/* <div>
           <div className="flex items-center mb-8">
             <div className={`p-3 rounded-lg mr-4 ${
               darkMode ? 'bg-green-900/50' : 'bg-green-100'
@@ -188,7 +191,7 @@ const Education = ({ darkMode }) => {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

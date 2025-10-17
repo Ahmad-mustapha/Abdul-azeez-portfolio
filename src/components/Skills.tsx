@@ -1,7 +1,10 @@
-import React from 'react';
 import { Calculator, FileText, Users, TrendingUp, Settings, Award } from 'lucide-react';
 
-const Skills = () => {
+interface SkillsProps {
+  darkMode: boolean;
+}
+
+const Skills = ({ darkMode }: SkillsProps) => {
   const skillCategories = [
     {
       title: 'Cost Management',
@@ -103,10 +106,10 @@ const Skills = () => {
             }`}>
               <div className="flex items-center mb-6">
                 <div className={`p-3 rounded-lg mr-4 ${
-                  darkMode ? 'bg-orange-900/50' : 'bg-orange-100'
+                  darkMode ? 'bg-blue-900/50' : 'bg-blue-100'
                 }`}>
                   <category.icon className={`${
-                    darkMode ? 'text-orange-400' : 'text-orange-600'
+                    darkMode ? 'text-blue-500' : 'text-blue-600'
                   }`} size={24} />
                 </div>
                 <h3 className={`text-xl font-bold ${
@@ -129,7 +132,7 @@ const Skills = () => {
                       darkMode ? 'bg-slate-700' : 'bg-slate-200'
                     }`}>
                       <div
-                        className="bg-gradient-to-r from-orange-500 to-orange-600 h-2 rounded-full transition-all duration-1000"
+                        className="bg-gradient-to-r from-blue-600 to-blue-700 h-2 rounded-full transition-all duration-1000"
                         style={{ width: `${skill.level}%` }}
                       ></div>
                     </div>

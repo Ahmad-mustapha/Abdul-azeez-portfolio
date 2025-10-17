@@ -1,9 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 
-const Header = ({ darkMode, toggleDarkMode }) => {
+interface HeaderProps {
+  darkMode: boolean;
+  toggleDarkMode: () => void;
+}
+
+const Header = ({ darkMode, toggleDarkMode }: HeaderProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,20 +22,31 @@ const Header = ({ darkMode, toggleDarkMode }) => {
   }, []);
 
   const navItems = [
-    { href: '#home', label: 'Home' },
-    { href: '#about', label: 'About' },
-    { href: '#experience', label: 'Experience' },
-    { href: '#projects', label: 'Projects' },
-    { href: '#skills', label: 'Skills' },
-    { href: '#contact', label: 'Contact' },
+    { href: '/', label: 'Home', isPage: true },
+    { href: '#about', label: 'About', isPage: false },
+    { href: '#experience', label: 'Experience', isPage: false },
+    { href: '/projects', label: 'Projects', isPage: true },
+    { href: '#skills', label: 'Skills', isPage: false },
+    { href: '#contact', label: 'Contact', isPage: false },
   ];
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+  const handleNavigation = (href: string, isPage: boolean = false) => {
+    if (isPage) {
+      // For page navigation, React Router will handle it
+      setIsMenuOpen(false);
+    } else {
+      // Scroll to section on current page
+      if (location.pathname !== '/') {
+        // If not on home page, navigate to home first, then scroll
+        window.location.href = `/${href}`;
+      } else {
+        const element = document.querySelector(href);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+      setIsMenuOpen(false);
     }
-    setIsMenuOpen(false);
   };
 
   return (
@@ -48,17 +66,31 @@ const Header = ({ darkMode, toggleDarkMode }) => {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
-              <button
-                key={item.href}
-                onClick={() => scrollToSection(item.href)}
-                className={`font-medium transition-colors duration-200 ${
-                  darkMode 
-                    ? 'text-slate-300 hover:text-orange-400' 
-                    : 'text-slate-700 hover:text-orange-500'
-                }`}
-              >
-                {item.label}
-              </button>
+              item.isPage ? (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className={`font-medium transition-colors duration-200 ${
+                    darkMode 
+                      ? 'text-slate-300 hover:text-blue-500' 
+                      : 'text-slate-700 hover:text-blue-600'
+                  }`}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <button
+                  key={item.href}
+                  onClick={() => handleNavigation(item.href, item.isPage)}
+                  className={`font-medium transition-colors duration-200 ${
+                    darkMode 
+                      ? 'text-slate-300 hover:text-blue-500' 
+                      : 'text-slate-700 hover:text-blue-600'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              )
             ))}
             
             {/* Dark Mode Toggle */}
@@ -80,8 +112,8 @@ const Header = ({ darkMode, toggleDarkMode }) => {
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={`md:hidden p-2 transition-colors ${
               darkMode 
-                ? 'text-slate-300 hover:text-orange-400' 
-                : 'text-slate-700 hover:text-orange-500'
+                ? 'text-slate-300 hover:text-blue-500' 
+                : 'text-slate-700 hover:text-blue-600'
             }`}
           >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -95,17 +127,32 @@ const Header = ({ darkMode, toggleDarkMode }) => {
           }`}>
             <div className="px-6 py-4 space-y-4">
               {navItems.map((item) => (
-                <button
-                  key={item.href}
-                  onClick={() => scrollToSection(item.href)}
-                  className={`block w-full text-left font-medium py-2 transition-colors ${
-                    darkMode 
-                      ? 'text-slate-300 hover:text-orange-400' 
-                      : 'text-slate-700 hover:text-orange-500'
-                  }`}
-                >
-                  {item.label}
-                </button>
+                item.isPage ? (
+                  <Link
+                    key={item.href}
+                    to={item.href}
+                    className={`block w-full text-left font-medium py-2 transition-colors ${
+                      darkMode 
+                        ? 'text-slate-300 hover:text-orange-400' 
+                        : 'text-slate-700 hover:text-orange-500'
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                ) : (
+                  <button
+                    key={item.href}
+                    onClick={() => handleNavigation(item.href, item.isPage)}
+                    className={`block w-full text-left font-medium py-2 transition-colors ${
+                      darkMode 
+                        ? 'text-slate-300 hover:text-orange-400' 
+                        : 'text-slate-700 hover:text-orange-500'
+                    }`}
+                  >
+                    {item.label}
+                  </button>
+                )
               ))}
               <button
                 onClick={toggleDarkMode}

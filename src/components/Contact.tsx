@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Mail, Phone, MapPin, Linkedin, Send, CheckCircle } from 'lucide-react';
 
-const Contact = ({ darkMode }) => {
+interface ContactProps {
+  darkMode: boolean;
+}
+
+const Contact = ({ darkMode }: ContactProps) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,7 +14,7 @@ const Contact = ({ darkMode }) => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // Simulate form submission
     setIsSubmitted(true);
@@ -20,7 +24,7 @@ const Contact = ({ darkMode }) => {
     }, 3000);
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -81,10 +85,10 @@ const Contact = ({ darkMode }) => {
               {contactInfo.map((info, index) => (
                 <div key={index} className="flex items-start space-x-4">
                   <div className={`p-3 rounded-lg flex-shrink-0 ${
-                    darkMode ? 'bg-orange-900/50' : 'bg-orange-100'
+                    darkMode ? 'bg-blue-900/50' : 'bg-blue-100'
                   }`}>
                     <info.icon className={`${
-                      darkMode ? 'text-orange-400' : 'text-orange-600'
+                      darkMode ? 'text-blue-500' : 'text-blue-600'
                     }`} size={24} />
                   </div>
                   <div>
@@ -96,8 +100,8 @@ const Contact = ({ darkMode }) => {
                         {info.href ? (
                           <a href={info.href} className={`transition-colors ${
                             darkMode 
-                              ? 'hover:text-orange-400' 
-                              : 'hover:text-orange-600'
+                              ? 'hover:text-blue-500' 
+                              : 'hover:text-blue-600'
                           }`}>
                             {detail}
                           </a>
@@ -166,7 +170,7 @@ const Contact = ({ darkMode }) => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors ${
                         darkMode 
                           ? 'bg-slate-700 border-slate-600 text-white placeholder-slate-400' 
                           : 'bg-white border-slate-300 text-slate-900'
@@ -187,7 +191,7 @@ const Contact = ({ darkMode }) => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-colors ${
+                      className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:border-blue-600 transition-colors ${
                         darkMode 
                           ? 'bg-slate-700 border-slate-600 text-white placeholder-slate-400' 
                           : 'bg-white border-slate-300 text-slate-900'
@@ -243,7 +247,7 @@ const Contact = ({ darkMode }) => {
 
                 <button
                   type="submit"
-                  className="w-full bg-orange-500 hover:bg-orange-600 text-white py-4 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 transition-all duration-300 transform hover:scale-105"
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 px-6 rounded-lg font-semibold flex items-center justify-center space-x-2 transition-all duration-300"
                 >
                   <Send size={20} />
                   <span>Send Message</span>
